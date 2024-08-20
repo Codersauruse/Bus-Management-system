@@ -2,6 +2,7 @@ import React from "react";
 import Navibar from "./Navibar";
 import "./Header.css"; // Import the CSS file
 import logo from "./logo.gif";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -28,10 +29,20 @@ export default function Header() {
               aria-label="Button group with nested dropdown"
             >
               <button type="button" className="btn btn-secondary">
-                Login
+                <Link
+                  to="/login"
+                  style={{ color: "inherit", textDecoration: "none" }}
+                >
+                  Login
+                </Link>
               </button>
               <button type="button" className="btn btn-secondary">
-                Sign In
+                <Link
+                  to="/signup"
+                  style={{ color: "inherit", textDecoration: "none" }}
+                >
+                  Sign in
+                </Link>
               </button>
               <div className="btn-group" role="group">
                 <button
@@ -48,7 +59,7 @@ export default function Header() {
                   <a className="dropdown-item" href="/Profile">
                     Profile
                   </a>
-                  <a className="dropdown-item" href="/Signout">
+                  <a className="dropdown-item" href="/signup">
                     Sign out
                   </a>
                 </div>
