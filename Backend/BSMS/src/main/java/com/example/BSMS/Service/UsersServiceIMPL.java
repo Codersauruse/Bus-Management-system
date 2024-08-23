@@ -2,7 +2,9 @@ package com.example.BSMS.Service;
 
 
 import com.example.BSMS.DTO.Request.UsersRegisterDTO;
+import com.example.BSMS.DTO.Response.UserResponseDTO;
 import com.example.BSMS.Entity.Users;
+import com.example.BSMS.Exception.NotFoundException;
 import com.example.BSMS.Repo.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,20 +40,16 @@ public class UsersServiceIMPL implements UsersService{
     }
 
     @Override
-    public String loginUser(String username, String password) {
-        if(userRepo.existsByUsername(username)){
-            Users user = userRepo.findByUsername(username);
-            if(user.getPassword().equals(password)){
-                return "login Succesfull";
-            }
-            else {
-                return "login Failed. password is incorrect";
-            }
-
-        }
-        else{
-            return "username  is incorrect";
+    public UserResponseDTO loginUser(String username, String password) {
+        Users user = userRepo.findByUsername(username);
+        if (user == null) {
+            throw new NotFoundException("Username is incorrect");
         }
 
+        if (!user.getPassword().equals(password)) {
+            throw new NotFoundException("Login failed. Password is incorrect");
+        }
+
+        return modelMapper.map(user, UserResponseDTO.class);
     }
 }
