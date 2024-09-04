@@ -6,17 +6,17 @@ import Header from "../components/Header";
 import "./Home.css";
 import Sort from "./Sort";
 import businfo from "../components/Timetable-components/busInfo";
-
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Journey from "../components/Timetable-components/Journey";
 
 
 
-export default function Map({destination, setDestination}) {
+export default function Map() {
   const [bustable, setBusinfo] = useState(businfo);
-
- 
- 
+  const location = useLocation();
+  const destination = location.state?.destination || "";
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (destination) {
@@ -38,13 +38,11 @@ export default function Map({destination, setDestination}) {
   }
 
   function SortByCity(bustable, city) {
+    if (location.pathname !== "/map") {
+      navigate("/map");
+    }
     bustable = businfo.slice().filter((a) => a.city === city);
     setBusinfo(bustable);
-  }
-
-  function SortByOneCity(){
-    SortByCity(bustable,destination);
-
   }
 
   return (
@@ -60,7 +58,7 @@ export default function Map({destination, setDestination}) {
           <br />
           <div className="search-bar">
             <br />
-            <Bussearch destination={destination}  setDestination={setDestination} onSearch={SortByOneCity}/>
+            <Bussearch bustable={bustable} SortByCity={SortByCity} />
           </div>
         </div>
       </div>

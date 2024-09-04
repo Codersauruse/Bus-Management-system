@@ -28,11 +28,17 @@ export default function Header() {
               role="group"
               aria-label="Button group with nested dropdown"
             >
-            
-              
               <button type="button" className="btn btn-secondary">
                 <Link
                   to="/login"
+                  style={{ color: "inherit", textDecoration: "none" }}
+                >
+                  Login
+                </Link>
+              </button>
+              <button type="button" className="btn btn-secondary">
+                <Link
+                  to="/signup"
                   style={{ color: "inherit", textDecoration: "none" }}
                 >
                   Sign in
