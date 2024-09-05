@@ -6,20 +6,22 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import SeatingLayout from "../components/Timetable-components/SeatingLayout";
 import "../components/Timetable-components/journey.css";
+import { useLocation } from "react-router-dom";
 
 export default function Booking() {
-
+  const location = useLocation();
+  const busJourney = location.state?.busJourney;
   const [selectedSeats, setSelectedSeats] = useState([]);
   const occupiedSeats = [3, 4, 14, 29]; 
 
-  const busJourney = {
+/*  const busJourney = {
     city: "Colombo",
     fare: 1100,
     Name: "Mighty Travels",
     depature: 10,
     arrival: 12,
     seats: 30,
-  };
+  }; */
 
   return (
     <div>
@@ -44,7 +46,7 @@ export default function Booking() {
                       <tbody>
                         <tr>
                           <td>Bus Name</td>
-                          <td>{busJourney.Name}</td>
+                          <td>{busJourney.name}</td>
                         </tr>
                         <tr>
                           <td>Route Number</td>

@@ -8,11 +8,11 @@ import "../../pages/Map.css";
 
 
 
-export default function Journey({ journey, color }) {
+export default function Journey({ journey, color,handleBooking }) {
     return (
       <li>
         <div className="BusDetail">
-          <Button variant={color}>{journey.Name}</Button>
+          <Button variant={color}>{journey.name}</Button>
           <p>Route number : {Math.floor(Math.random() * 300)}</p>
         </div>
         <div className="Shedule">
@@ -51,6 +51,8 @@ export default function Journey({ journey, color }) {
           <Button variant={journey.seats ? "success" : "danger"}>
             {journey.seats ? "Available" : "Sold out"}
           </Button>
+          <Button onClick={handleBooking}>Book Now</Button>
+
         </div>
       </li>
     );

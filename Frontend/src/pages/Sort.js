@@ -1,6 +1,7 @@
 import { ReactComponent as Funnel } from "../resources/funnel-fill.svg";
 import Button from "react-bootstrap/Button";
-function Sort({ bustable, SortbyName, SortbyAttribute }) {
+
+function Sort({  SortbyName, SortbyAttribute }) {
   return (
     <div className="Container">
       <div className="Label">
@@ -12,41 +13,31 @@ function Sort({ bustable, SortbyName, SortbyAttribute }) {
       <div className="sort">
         <Button
           variant="outline-dark"
-          onClick={() => {
-            SortbyName(bustable);
-          }}
+          onClick={() => SortbyName()} // No need to pass bustable
         >
           Name
         </Button>
         <Button
           variant="outline-dark"
-          onClick={() => {
-            SortbyAttribute(bustable, "fare");
-          }}
+          onClick={() => SortbyAttribute("fare")} // Pass attribute name only
         >
           Fare
         </Button>
         <Button
           variant="outline-dark"
-          onClick={() => {
-            SortbyAttribute(bustable, "seats");
-          }}
+          onClick={() => SortbyAttribute("seats")}
         >
-          Seats Availabilty
+          Seats Availability
         </Button>
         <Button
           variant="outline-dark"
-          onClick={() => {
-            SortbyAttribute(bustable, "depature");
-          }}
+          onClick={() => SortbyAttribute("departure")} // Corrected typo
         >
-          Depature Time
+          Departure Time
         </Button>
         <Button
           variant="outline-dark"
-          onClick={() => {
-            SortbyAttribute(bustable, "arrival");
-          }}
+          onClick={() => SortbyAttribute("arrival")}
         >
           Arrival Time
         </Button>

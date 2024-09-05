@@ -1,48 +1,71 @@
-import React, { useState } from "react";
-import Bussearch from "../components/Bussearch";
-import "../components/Header.css";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-
-import "./Home.css";
+import Bussearch from "../components/Bussearch";
 import Sort from "./Sort";
-import businfo from "../components/Timetable-components/busInfo";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import Journey from "../components/Timetable-components/Journey";
-
-
+import { viewAllBusses } from "../apiService/ApiService";
 
 export default function Map() {
-  const [bustable, setBusinfo] = useState(businfo);
+  const [Destination, setDestination] = useState("");
+  const [bustable, setBustable] = useState([]);
+  const [filteredBustable, setFilteredBustable] = useState([]);
   const location = useLocation();
   const destination = location.state?.destination || "";
   const navigate = useNavigate();
 
+
+
+
+  const handleBooking = (bus) => {
+    navigate("/booking", { state: { busJourney: bus } });
+  };
+
+  useEffect(() => {
+    const getBusDetails = async () => {
+      try {
+        const response = await viewAllBusses();
+        setBustable(response.data);
+        setFilteredBustable(response.data); // Initialize filteredBustable with all data
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getBusDetails();
+  }, []); // Only runs once on component mount
+
   useEffect(() => {
     if (destination) {
-      const filteredBustable = businfo.filter(
-        (bus) => bus.city === destination
-      );
-      setBusinfo(filteredBustable);
+      const filtered = bustable.filter((bus) => bus.city === destination);
+      setFilteredBustable(filtered);
+    } else {
+      setFilteredBustable(bustable); // Show all if no destination is selected
     }
-  }, [destination]);
+  }, [destination, bustable]); // Only filters when destination or bustable changes
 
-  function SortbyName(bustable) {
-    bustable = bustable.slice().sort((a, b) => a.Name.localeCompare(b.Name));
-    setBusinfo(bustable);
+  function SortbyName() {
+    const sortedBustable = filteredBustable.slice().sort((a, b) => a.name.localeCompare(b.name));
+    setFilteredBustable(sortedBustable);
+  }
+  
+  function SortbyAttribute(attribute) {
+    const sortedBustable = filteredBustable.slice().sort((a, b) => {
+      if (typeof a[attribute] === 'string') {
+        return a[attribute].localeCompare(b[attribute]);
+      }
+      return a[attribute] - b[attribute];
+    });
+    setFilteredBustable(sortedBustable);
   }
 
-  function SortbyAttribute(bustable, attribute) {
-    bustable = bustable.slice().sort((a, b) => a[attribute] - b[attribute]);
-    setBusinfo(bustable);
-  }
-
-  function SortByCity(bustable, city) {
+  function SortByCity() {
     if (location.pathname !== "/map") {
       navigate("/map");
     }
-    bustable = businfo.slice().filter((a) => a.city === city);
-    setBusinfo(bustable);
+    const filteredBustable = bustable.filter((bus) => bus.city === Destination);
+    setFilteredBustable(filteredBustable);
   }
 
   return (
@@ -52,27 +75,26 @@ export default function Map() {
         <br />
         <br />
         <br />
-
         <div className="content">
           <br />
           <br />
           <div className="search-bar">
             <br />
-            <Bussearch bustable={bustable} SortByCity={SortByCity} />
+            <Bussearch bustable={filteredBustable} destination={Destination}  setDestination={setDestination} onSearch={SortByCity}/>
           </div>
         </div>
       </div>
       <Sort
-        bustable={bustable}
         SortbyName={SortbyName}
         SortbyAttribute={SortbyAttribute}
       />
-      <Timetable bustable={bustable} />
+      <Timetable bustable={filteredBustable} handleBooking={handleBooking}/>
     </div>
   );
 }
 
-function Timetable({ bustable }) {
+function Timetable({ bustable,handleBooking }) {
+ 
   const color = [
     "primary",
     "secondary",
@@ -83,19 +105,20 @@ function Timetable({ bustable }) {
     "dark",
   ];
 
-  //2console.log(randnum);
-
   return (
     <div className="list">
+      
       <ul>
-        {bustable.map((init) => (
+        {bustable.map((init,index) => (
           <Journey
+            key={`${index}`} // Make sure each item has a unique key
             journey={init}
-            color={color[Math.floor(Math.random() * 7)]}
+            color={color[Math.floor(Math.random() * 7)]
+            }
+            handleBooking={() => handleBooking(init)}
           />
-        ))}
+        ) )}
       </ul>
     </div>
   );
 }
-

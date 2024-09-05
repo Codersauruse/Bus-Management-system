@@ -1,4 +1,4 @@
-import apiClient from "./Apiclient";
+import apiClient from "./ApiClient"
 
 
 export const viewAllUsers = () => {
@@ -10,3 +10,6 @@ export const viewAllUsers = () => {
     return apiClient.post('user/save', data);
   };
 
+  export const viewAllBusses = () =>{
+    return apiClient.get('BusInfo/get-All-buses');
+  }
