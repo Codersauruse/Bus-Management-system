@@ -7,12 +7,12 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "./Home.css";
 
-export default function Home({destination, setDestination}) {
-
+export default function Home() {
+  const [destination, setDestination] = useState("");
   const navigate = useNavigate();
 
   const handleSearchSubmit = () => {
-    navigate("/map");
+    navigate("/map", { state: { destination } });
   };
 
   return (
