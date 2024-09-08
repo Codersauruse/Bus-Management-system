@@ -7,6 +7,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 1000; /* Ensure it's above other elements */
 }
 
 .footer-section {
@@ -15,8 +16,8 @@
 }
 
 .footer-section a {
-    font-size: 1.5em; /* Increase font size slightly */
-    font-weight: bold; /* Make links bold */
+    font-size: 1.5em;
+    font-weight: bold;
     color: #333;
     text-decoration: none;
     display: block;
@@ -24,5 +25,5 @@
 
 .footer-section p {
     color: #666;
-    margin-top: 0; /* Reduce margin-top */
+    margin-top: 0;
 }

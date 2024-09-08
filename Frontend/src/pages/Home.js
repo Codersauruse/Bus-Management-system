@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "./Home.css";
 
+
 export default function Home() {
   const [destination, setDestination] = useState("");
   const navigate = useNavigate();

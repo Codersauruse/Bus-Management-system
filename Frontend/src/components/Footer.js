@@ -1,20 +1,20 @@
 import React from 'react';
-import './Footer.css'; // Import the CSS file for styling
-
+import { Link } from 'react-router-dom';
+import "./Footer.css";
 export default function Footer() {
     return (
         <div className="footer">
             <div className="footer-section">
-                <a href="#" target="_blank" rel="noopener noreferrer">About Us</a>
+                <Link to="./AboutUs">About Us</Link>
                 <p>Learn more about our company and values.</p>
             </div>
             <div className="footer-section">
-                <a href="#" target="_blank" rel="noopener noreferrer">FAQ</a>
-                <p>Find answers to common questions.</p>
+                <Link to="/faq">FAQ</Link>
+                <p>Find answers to commonly asked questions.</p>
             </div>
             <div className="footer-section">
-                <a href="#" target="_blank" rel="noopener noreferrer">Rate Us</a>
-                <p>Give us your feedback and rate our services.</p>
+                <Link to="/rate-us">Rate Us</Link>
+                <p>We value your feedback!</p>
             </div>
         </div>
     );
