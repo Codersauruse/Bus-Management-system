@@ -33,20 +33,11 @@ export default function Map() {
     setBusinfo(bustable);
   }
 
-  function SortByCity(bustable, city) {
-    if (location.pathname !== "/map") {
-      navigate("/map");
-    }
-    bustable = businfo.slice().filter((a) => a.city === city);
-    setBusinfo(bustable);
-  }
-
   return (
       <div className="home-container">
         <div className="head">
-          <Header/>
+          <Header />
           <div className="content">
-
             {/* Removed the search-bar section */}
           </div>
         </div>
