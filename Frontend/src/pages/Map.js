@@ -1,16 +1,12 @@
-import React, { useState } from "react";
-import Bussearch from "../components/Bussearch";
+import React, { useState, useEffect } from "react";
 import "../components/Header.css";
 import Header from "../components/Header";
 
 import "./Home.css";
 import Sort from "./Sort";
 import businfo from "../components/Timetable-components/busInfo";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Journey from "../components/Timetable-components/Journey";
-
-
 
 export default function Map() {
   const [bustable, setBusinfo] = useState(businfo);
@@ -21,7 +17,7 @@ export default function Map() {
   useEffect(() => {
     if (destination) {
       const filteredBustable = businfo.filter(
-        (bus) => bus.city === destination
+          (bus) => bus.city === destination
       );
       setBusinfo(filteredBustable);
     }
@@ -46,29 +42,21 @@ export default function Map() {
   }
 
   return (
-    <div className="home-container">
-      <div className="head">
-        <Header />
-        <br />
-        <br />
-        <br />
+      <div className="home-container">
+        <div className="head">
+          <Header/>
+          <div className="content">
 
-        <div className="content">
-          <br />
-          <br />
-          <div className="search-bar">
-            <br />
-            <Bussearch bustable={bustable} SortByCity={SortByCity} />
+            {/* Removed the search-bar section */}
           </div>
         </div>
+        <Sort
+            bustable={bustable}
+            SortbyName={SortbyName}
+            SortbyAttribute={SortbyAttribute}
+        />
+        <Timetable bustable={bustable} />
       </div>
-      <Sort
-        bustable={bustable}
-        SortbyName={SortbyName}
-        SortbyAttribute={SortbyAttribute}
-      />
-      <Timetable bustable={bustable} />
-    </div>
   );
 }
 
@@ -83,19 +71,16 @@ function Timetable({ bustable }) {
     "dark",
   ];
 
-  //2console.log(randnum);
-
   return (
-    <div className="list">
-      <ul>
-        {bustable.map((init) => (
-          <Journey
-            journey={init}
-            color={color[Math.floor(Math.random() * 7)]}
-          />
-        ))}
-      </ul>
-    </div>
+      <div className="list">
+        <ul>
+          {bustable.map((init) => (
+              <Journey
+                  journey={init}
+                  color={color[Math.floor(Math.random() * 7)]}
+              />
+          ))}
+        </ul>
+      </div>
   );
 }
-

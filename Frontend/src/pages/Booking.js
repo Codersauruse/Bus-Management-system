@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import Navibar from "../components/Navibar";
 import Journey from "../components/Timetable-components/Journey";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import SeatingLayout from "../components/Timetable-components/SeatingLayout";
 import "../components/Timetable-components/journey.css";
-import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Bussearch from "../components/Bussearch";
-
 export default function Booking() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const occupiedSeats = [3, 4, 14, 29];
@@ -28,15 +24,13 @@ export default function Booking() {
         <div className="head">
           <Header />
           <br />
-          <br />
-          <br />
         </div>
 
         <main>
           <section>
             <div className="ticket_container">
               <div className="ticket">
-                <h2>Ticket</h2>
+                <h2>Tickets</h2>
                 <Journey journey={busJourney} color={"primary"} />
                 <div className="ticketInfo">
                   <Card className="journeyDetails">
@@ -96,7 +90,6 @@ export default function Booking() {
         </main>
 
         <div className="footer-wrapper">
-          <Footer />
         </div>
       </div>
   );
